@@ -60,13 +60,13 @@ function Item({ item, onPress }) {
             }}
           />
           <View className="pl-3">
-            <Text className="font-bold text-xl">{item.name}</Text>
+            <Text className="font-semibold text-lg">{item.name}</Text>
             <Text className="text-xs font-extralight">
               {genreFilter(item.genre)}
             </Text>
             <View className="flex-row">
               <Playlist
-                type="list"
+                type="stations"
                 api="https://onlineradiobox.com/json/"
                 country="uk/"
                 alias={`${item?.alias}`}

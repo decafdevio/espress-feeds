@@ -4,7 +4,7 @@ import {
   TouchableOpacity,
   Text,
   FlatList,
-  Clipboard,
+  // Clipboard,
   Alert,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -34,7 +34,7 @@ export default function Playlist({ type, api, country, alias }) {
         let res = await fetch(address);
         let data = await res.json();
         data.playlist =
-          type !== "list"
+          type == "list"
             ? data.playlist.slice(0, 10)
             : data.playlist.slice(0, 1);
         const dplist = await data.playlist;
@@ -79,7 +79,7 @@ export default function Playlist({ type, api, country, alias }) {
     Alert.alert(item.name, "", [
       {
         text: "Copy",
-        onPress: () => Clipboard.setString(item.name),
+        // onPress: () => Clipboard.setString(item.name),
         style: "default",
       },
       {
@@ -101,21 +101,21 @@ export default function Playlist({ type, api, country, alias }) {
   };
 
   const Item = ({ item, index }) => {
-    if (type == "list") {
+    if (type == "search") {
       return (
-        <TouchableOpacity className="flex-row mt-2 py-2 bg-slate-200 w-fit mr-3.5 rounded-md pl-1">
+        <TouchableOpacity className="flex-row mt-1 p-2 bg-slate-200 w-fit mr-3.5 rounded-md">
           <View className="flex-row items-center">
             {/* <Text className="px-2 bg-slate-200 font-extrabold">Now</Text> */}
             <View className="relative">
               <Text className="text-xs">
-                <Text> {item.name.split("-")[0]} - </Text>
+                <Text>{item.name.split("-")[0]} - </Text>
                 <Text className="font-semibold">{item.name.split("-")[1]}</Text>
               </Text>
             </View>
           </View>
         </TouchableOpacity>
       );
-    } else {
+    } else if (type == "list") {
       return (
         <TouchableOpacity
           className="flex-row mt-2 py-2 bg-slate-200 w-screen"
@@ -134,6 +134,20 @@ export default function Playlist({ type, api, country, alias }) {
               <Text> {item.name.split("-")[0]}</Text>
               <Text className="text-base font-semibold">
                 {item.name.split("-")[1]}
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      );
+    } else if (type == "stations") {
+      return (
+        <TouchableOpacity className="flex-row mt-1 py-2 bg-slate-200 w-screen rounded-md pl-1">
+          <View className="flex-row items-center">
+            {/* <Text className="px-2 bg-slate-200 font-extrabold">Now</Text> */}
+            <View className="relative">
+              <Text className="text-xs">
+                <Text> {item.name.split("-")[0]} - </Text>
+                <Text className="font-semibold">{item.name.split("-")[1]}</Text>
               </Text>
             </View>
           </View>

@@ -20,6 +20,7 @@ export default function Station({
   playTrack,
 }) {
   const route = useRoute();
+  console.log(route.params.item.alias);
 
   const onPressPlay = () => {
     // let feedAudio;
@@ -52,10 +53,10 @@ export default function Station({
       <View className="mb-60">
         <Text>
           <Playlist
-            type="group"
+            type="list"
             api={api}
             country={country}
-            alias={route.params.item.alt}
+            alias={route.params.item.alias}
           />
         </Text>
       </View>

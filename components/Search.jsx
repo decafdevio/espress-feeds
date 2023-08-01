@@ -81,15 +81,15 @@ export default Search = ({ navigation, route, onPress }) => {
                   height: 80,
                 }}
               /> */}
-          <View className="pl-3">
+          <View className="pl-2">
             <Text>
               <Text className="font-bold text-lg">{item.title}</Text>
-              <Text className="pl-2 font-light"> - {item.cityName}</Text>
+              <Text className="pl-2 font-extralight"> - {item.cityName}</Text>
             </Text>
             <View className="flex-row">
               <Text>
                 <Playlist
-                  type="list"
+                  type="search"
                   api="https://onlineradiobox.com/json/"
                   country="uk/"
                   alias={`${item.alias}/`}
