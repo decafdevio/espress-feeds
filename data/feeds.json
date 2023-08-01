@@ -1,12 +1,5 @@
 [
-  {
-    "name": "LiteRECORDS",
-    "genre": "mashups",
-    "website": "literecords.com",
-    "uri": "http://literecords.com:9998",
-    "albumart":
-      "https://literecords.com/social/logo-300x300.png"
-  },  
+
   {
     "name": "Radio 1",
     "genre": ["dance", "rock", "pop", "hip-hop", "indie"],
@@ -14,16 +7,16 @@
     "uri": "https://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/sbr_low/aks/bbc_radio_one.m3u8",
     "albumart":
       "https://ukradiolive.com/public/uploads/radio_img/bbc-radio-1/play_250_250.jpg",
-    "alt": "bbcradio1/"
+    "alias": "bbcradio1/"
   },
   {
     "name": "Radio 1 Dance",
-    "genre": "dance",
+    "genre": ["dance"],
     "website": "bbc.co.uk/sounds/play",
     "uri": "http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/uk/sbr_med/ak/bbc_radio_one_dance.m3u8",
     "albumart":
       "https://i1.sndcdn.com/artworks-nate4WqJpUkjBUrT-AyFWqw-t500x500.jpg",
-    "alt": "bbcdance/"
+    "alias": "bbcdance/"
   }
 
 ]

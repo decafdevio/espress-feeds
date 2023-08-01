@@ -52,7 +52,7 @@ export default function Station({
       <View className="mb-60">
         <Text>
           <Playlist
-            ptype="list"
+            type="group"
             api={api}
             country={country}
             alias={route.params.item.alt}

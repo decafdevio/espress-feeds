@@ -74,7 +74,7 @@ export default function Playlist({ type, api, country, alias }) {
 
   const trackOpts = async (item, index) => {
     const asyncKeys = await AsyncStorage.getAllKeys();
-    const count = asyncKeys.length;
+    const count = asyncKeys.length + 1;
 
     Alert.alert(item.name, "", [
       {
@@ -84,8 +84,13 @@ export default function Playlist({ type, api, country, alias }) {
       },
       {
         text: "Save Track",
-        onPress: () =>
-          AsyncStorage.setItem(`saved${count}`, JSON.stringify(item.name)),
+        onPress: async () => {
+          await AsyncStorage.setItem(
+            `saved${count}`,
+            JSON.stringify(item.name)
+          );
+          console.log(count);
+        },
         style: "default",
       },
       {
@@ -95,27 +100,47 @@ export default function Playlist({ type, api, country, alias }) {
     ]);
   };
 
-  const Item = ({ item, index }) => (
-    <TouchableOpacity
-      className="flex-row mt-2 py-2 bg-slate-200 w-screen"
-      onLongPress={() => trackOpts(item, index)}
-      // onLongPress={() => saveTrack(index, item)}
-    >
-      <View className="flex-row py-1 pl-3 items-center">
-        {/* <Text className={`${saveBtn.btnColor} pr-1`}>
-          <IconAD name="hearto" size={20} />
-          <IconAD name={index === itemIndex && saveBtn.btnIcon} size={20} />
-        </Text> */}
-        <Text className="px-2 bg-slate-200 font-extrabold">{item.created}</Text>
-        <View className="w-fit flex-col relative">
-          <Text> {item.name.split("-")[0]}</Text>
-          <Text className="text-base font-semibold">
-            {item.name.split("-")[1]}
-          </Text>
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
+  const Item = ({ item, index }) => {
+    if (type == "list") {
+      return (
+        <TouchableOpacity className="flex-row mt-2 py-2 bg-slate-200 w-fit mr-3.5 rounded-md pl-1">
+          <View className="flex-row items-center">
+            {/* <Text className="px-2 bg-slate-200 font-extrabold">Now</Text> */}
+            <View className="relative">
+              <Text className="text-xs">
+                <Text> {item.name.split("-")[0]} - </Text>
+                <Text className="font-semibold">{item.name.split("-")[1]}</Text>
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      );
+    } else {
+      return (
+        <TouchableOpacity
+          className="flex-row mt-2 py-2 bg-slate-200 w-screen"
+          onLongPress={() => trackOpts(item, index)}
+          // onLongPress={() => saveTrack(index, item)}
+        >
+          <View className="flex-row py-1 pl-3 items-center">
+            {/* <Text className={`${saveBtn.btnColor} pr-1`}>
+                  <IconAD name="hearto" size={20} />
+                  <IconAD name={index === itemIndex && saveBtn.btnIcon} size={20} />
+                </Text> */}
+            <Text className="px-2 bg-slate-200 font-extrabold">
+              {item.created}
+            </Text>
+            <View className="w-fit flex-col relative">
+              <Text> {item.name.split("-")[0]}</Text>
+              <Text className="text-base font-semibold">
+                {item.name.split("-")[1]}
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      );
+    }
+  };
 
   return (
     <FlatList

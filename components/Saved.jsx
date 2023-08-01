@@ -1,20 +1,23 @@
 import { useState, useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
 import {
   SafeAreaView,
   Text,
   View,
   FlatList,
-  Image,
+  Clipboard,
   Linking,
   TouchableOpacity,
+  Alert,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
-import IconAD from "react-native-vector-icons/AntDesign";
 import { useIsFocused } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import IconFA from "react-native-vector-icons/FontAwesome";
 
 export default function Saved() {
   const [saved, setSaved] = useState("");
+  const [refresh, setRefresh] = useState(false);
+  const navigation = useNavigation();
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -22,6 +25,7 @@ export default function Saved() {
       try {
         const asyncKeys = await AsyncStorage.getAllKeys();
         setSaved(await AsyncStorage.multiGet(asyncKeys));
+        console.log(saved);
       } catch (error) {
         console.error(error);
       }
@@ -29,34 +33,73 @@ export default function Saved() {
     get();
   }, [isFocused]);
 
-  function Item(item) {
-    console.log(item.item[0]);
+  useEffect(() => {
+    console.log("refresh");
+    setRefresh(false);
+  }, [refresh]);
 
+  const removeItem = async (key, item) => {
+    await Alert.alert(item, "", [
+      {
+        text: "Copy",
+        onPress: () => Clipboard.setString(item.name),
+        style: "default",
+      },
+      {
+        text: "Remove Track",
+        onPress: async () => {
+          await AsyncStorage.removeItem(key);
+          await setRefresh(false);
+        },
+        style: "default",
+      },
+      {
+        text: "Close",
+        style: "cancel",
+      },
+    ]);
+  };
+
+  function Item(item) {
+    const itemKey = item.item[0];
     item = item.item[1].replace(/['"]+/g, "");
     let artist = item.split("-")[0];
     let track = item.split("-")[1];
-    let ytQ = (artist + track).replace(/[ ]+/g, "+");
+    let searchQ = (artist + track).replace(/[ ]+/g, "+");
 
     return (
       <TouchableOpacity
         className="flex-row mt-1 bg-slate-100 rounded-lg py-3"
         // onPress={() => navigation.navigate("WebPage")}
+        onLongPress={() => {
+          removeItem(itemKey, item);
+        }}
       >
         <View className="pl-3">
           {/* <Text className="font-bold text-xl">{item}</Text> */}
           <Text> {artist}</Text>
           <Text className="text-base font-semibold">{track}</Text>
         </View>
-        <View className="absolute flex right-3 top-4">
+        <View className="absolute flex-row right-3 top-4">
+          <TouchableOpacity
+            className="mx-1.5"
+            onPress={() =>
+              Linking.openURL(`https://open.spotify.com/search/${searchQ}`)
+            }
+          >
+            <Text className="text-slate-400">
+              <IconFA name="spotify" size={30} />
+            </Text>
+          </TouchableOpacity>
           <TouchableOpacity
             onPress={() =>
               Linking.openURL(
-                `https://www.youtube.com/results?search_query=${ytQ}`
+                `https://youtube.com/results?search_query=${searchQ}`
               )
             }
           >
             <Text className="text-slate-400">
-              <IconAD name="youtube" size={30} />
+              <IconFA name="youtube-play" size={30} />
             </Text>
           </TouchableOpacity>
           {/* <Text className="font-semibold py-1">Now </Text> */}

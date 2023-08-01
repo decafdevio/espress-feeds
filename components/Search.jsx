@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { useEffect } from "react";
 import { useState } from "react";
+import Playlist from "./Playlist";
 
 export default Search = ({ navigation, route, onPress }) => {
   const [stationList, setStationList] = useState([]);
@@ -25,7 +26,8 @@ export default Search = ({ navigation, route, onPress }) => {
         let res = await fetch(address);
         let data = await res.json();
         const tmpList = await data.stations;
-        await setStationList(tmpList);
+        await setStationList(tmpList.slice(0, 15));
+        // console.log(stationList);
         return stationList;
       } catch (error) {
         console.error(error);
@@ -52,7 +54,19 @@ export default Search = ({ navigation, route, onPress }) => {
   }
 
   function Item({ item, onPress }) {
-    const stream = fetchStation(item.alias);
+    // const stream = fetchStation(item.alias);
+
+    const genreFilter = (genreList) => {
+      let genres = null;
+
+      for (let i = 0; i < genreList.length; i++) {
+        genres
+          ? (genres = genres + ", " + genreList[i])
+          : (genres = genreList[i]);
+      }
+      return genres;
+    };
+
     return (
       <TouchableOpacity
         className="flex-row mt-1 bg-slate-100 rounded-lg"
@@ -68,15 +82,23 @@ export default Search = ({ navigation, route, onPress }) => {
                 }}
               /> */}
           <View className="pl-3">
-            <Text className="font-bold text-lg">{item.title}</Text>
-            {/* <Text>{item.genre && "Genre: " + item.genre}</Text> */}
-            <Text>{item.cityName}</Text>
+            <Text>
+              <Text className="font-bold text-lg">{item.title}</Text>
+              <Text className="pl-2 font-light"> - {item.cityName}</Text>
+            </Text>
             <View className="flex-row">
-              {/* <Text className="font-semibold py-1">Now </Text>
-                  <Text className="p-1 bg-slate-200 text-gray-800 rounded">
-                    {item.website}
-                  </Text> */}
+              <Text>
+                <Playlist
+                  type="list"
+                  api="https://onlineradiobox.com/json/"
+                  country="uk/"
+                  alias={`${item.alias}/`}
+                />
+              </Text>
             </View>
+            {/* <Text className="mt-1 text-xs font-extralight">
+              {genreFilter(item.genres)}
+            </Text> */}
           </View>
         </View>
       </TouchableOpacity>
@@ -94,10 +116,10 @@ export default Search = ({ navigation, route, onPress }) => {
       </View>
 
       <SafeAreaView className="bg-slate-400 flex-1 -my-1.5">
-        <View className="h-2"></View>
         <FlatList
           style={{ flex: 1 }}
           data={stationList}
+          onEndReachedThreshold={0.9}
           renderItem={({ item }) => (
             <Item
               item={item}
@@ -110,6 +132,7 @@ export default Search = ({ navigation, route, onPress }) => {
           )}
           keyExtractor={(item) => item.alias}
         />
+        <View className="h-3.5"></View>
       </SafeAreaView>
     </>
   );

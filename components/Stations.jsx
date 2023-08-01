@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import feeds from "../data/feeds.json";
+import Playlist from "./Playlist";
 
 export default Stations = ({ navigation, route, onPress }) => {
   return (
@@ -32,6 +33,17 @@ export default Stations = ({ navigation, route, onPress }) => {
 };
 
 function Item({ item, onPress }) {
+  const genreFilter = (genreList) => {
+    let genres = null;
+
+    for (let i = 0; i < genreList.length; i++) {
+      genres
+        ? (genres = genres + ", " + genreList[i])
+        : (genres = genreList[i]);
+    }
+    return genres;
+  };
+
   return (
     <>
       <TouchableOpacity
@@ -49,12 +61,21 @@ function Item({ item, onPress }) {
           />
           <View className="pl-3">
             <Text className="font-bold text-xl">{item.name}</Text>
-            <Text>{item.genre && "Genre: " + item.genre}</Text>
+            <Text className="text-xs font-extralight">
+              {genreFilter(item.genre)}
+            </Text>
             <View className="flex-row">
-              <Text className="font-semibold py-1">Now </Text>
+              <Playlist
+                type="list"
+                api="https://onlineradiobox.com/json/"
+                country="uk/"
+                alias={`${item?.alias}`}
+              />
+
+              {/* <Text className="font-semibold py-1">Now </Text>
               <Text className="p-1 bg-slate-200 text-gray-800 rounded">
                 {item.website}
-              </Text>
+              </Text> */}
             </View>
           </View>
         </View>
