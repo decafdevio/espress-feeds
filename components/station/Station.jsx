@@ -10,6 +10,8 @@ import Info from "./Info";
 import Star from "./Star";
 import Playlist from "../Playlist";
 import { useRoute } from "@react-navigation/native";
+import { useEffect } from "react";
+import { useState } from "react";
 
 export default function Station({
   api,
@@ -20,9 +22,27 @@ export default function Station({
   playTrack,
 }) {
   const route = useRoute();
-  console.log(route.params.item.alias);
+  const [uri, setUri] = useState("");
 
-  const onPressPlay = () => {
+  async function fetchStation(alias) {
+    const widgetAPI = api + country + alias + "/widget/";
+    if (alias) {
+      try {
+        let res = await fetch(widgetAPI);
+        let data = await res.json();
+        const stream = await data.streamURL;
+        console.log("stream: ", stream);
+        // setUri(stream);
+        playTrack(stream);
+        // return stream;
+      } catch (error) {
+        console.error(error);
+        return;
+      }
+    }
+  }
+
+  const onPressPlay = (uri) => {
     // let feedAudio;
     // if (streamURL) {
     //   feedAudio = streamURL;
@@ -30,27 +50,31 @@ export default function Station({
     // } else {
     //   feedAudio = route.params.item.uri;
     // }
-    const feedAudio = route.params.item.uri;
-    const param2 = "second comment";
-    playTrack(feedAudio, param2);
+    const feedAudio = uri;
+    console.log(feedAudio);
+
+    playTrack(uri);
   };
 
   return (
     <>
       <View className="px-6 py-3 bg-slate-400 flex-row justify-center items-center">
-        <Info title={route.params.item.name} desc={desc} />
-        <TouchableOpacity onPress={onPressPlay} className="items-center">
+        <Info title={route.params.item.title} desc={desc} />
+        <TouchableOpacity
+          onPress={() => fetchStation(route.params.item.alias)}
+          className="items-center"
+        >
           <Image
             style={styles.image}
             source={{ uri: route.params.item.albumart }}
           />
           <Text className="text-slate-100 uppercase font-light pt-3">
-            Play <Text className="font-bold">{route.params.item.name}</Text>
+            Play <Text className="font-bold">{route.params.item.title}</Text>
           </Text>
         </TouchableOpacity>
         <Star />
       </View>
-      <View className="mb-60">
+      <View className="mb-[230px]">
         <Text>
           <Playlist
             type="list"

@@ -33,6 +33,7 @@ export default function Settings() {
           )
         }
         title="Developer Links"
+        className="text-xs"
         // color="black"
       />
     );
@@ -52,10 +53,10 @@ export default function Settings() {
     return (
       // <Button onPress={get} title="Get Storage" />
       <TouchableOpacity
-        className="border-2 border-slate-50 h-12 px-4 items-center justify-center rounded-md mx-3 mt-3"
+        className="border-2 border-slate-400 h-8 px-4 items-center justify-center rounded-md mx-3 mt-3"
         onPress={get}
       >
-        <Text className="font-semibold">Test Storage</Text>
+        <Text className="font-semibold text-xs">Test Storage</Text>
       </TouchableOpacity>
     );
   };
@@ -80,10 +81,10 @@ export default function Settings() {
     return (
       // <Button className="bg-slate-50" onPress={clear} title="Empty Storage" />
       <TouchableOpacity
-        className="border-2 border-slate-50 h-12 px-4 items-center justify-center rounded-md mx-3 mt-3"
+        className="border-2 border-slate-400 h-8 px-4 items-center justify-center rounded-md mx-3 mt-3"
         onPress={clear}
       >
-        <Text className="font-semibold">Empty Storage</Text>
+        <Text className="font-semibold text-xs">Empty Storage</Text>
       </TouchableOpacity>
     );
   };
@@ -91,7 +92,7 @@ export default function Settings() {
   return (
     <SafeAreaView>
       <View className="bg-slate-200 p-3 w-screen items-center">
-        <Text className="text-lg">Developer Options</Text>
+        <Text className="text-base">Developer Options</Text>
         <View className="flex-row">
           <DevGetData />
           <DevCleardata />

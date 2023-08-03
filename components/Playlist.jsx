@@ -23,6 +23,7 @@ export default function Playlist({ type, api, country, alias }) {
     api +
     country +
     alias +
+    "/" +
     "playlist/0?tz=" +
     new Date().getTimezoneOffset() +
     "&rnd=" +
@@ -103,7 +104,7 @@ export default function Playlist({ type, api, country, alias }) {
   const Item = ({ item, index }) => {
     if (type == "search") {
       return (
-        <TouchableOpacity className="flex-row mt-1 p-2 bg-slate-200 w-fit mr-3.5 rounded-md">
+        <View className="flex-row mt-1 px-2 py-1.5 bg-slate-200 w-fit mr-2 rounded-md">
           <View className="flex-row items-center">
             {/* <Text className="px-2 bg-slate-200 font-extrabold">Now</Text> */}
             <View className="relative">
@@ -113,35 +114,11 @@ export default function Playlist({ type, api, country, alias }) {
               </Text>
             </View>
           </View>
-        </TouchableOpacity>
-      );
-    } else if (type == "list") {
-      return (
-        <TouchableOpacity
-          className="flex-row mt-2 py-2 bg-slate-200 w-screen"
-          onLongPress={() => trackOpts(item, index)}
-          // onLongPress={() => saveTrack(index, item)}
-        >
-          <View className="flex-row py-1 pl-3 items-center">
-            {/* <Text className={`${saveBtn.btnColor} pr-1`}>
-                  <IconAD name="hearto" size={20} />
-                  <IconAD name={index === itemIndex && saveBtn.btnIcon} size={20} />
-                </Text> */}
-            <Text className="px-2 bg-slate-200 font-extrabold">
-              {item.created}
-            </Text>
-            <View className="w-fit flex-col relative">
-              <Text> {item.name.split("-")[0]}</Text>
-              <Text className="text-base font-semibold">
-                {item.name.split("-")[1]}
-              </Text>
-            </View>
-          </View>
-        </TouchableOpacity>
+        </View>
       );
     } else if (type == "stations") {
       return (
-        <TouchableOpacity className="flex-row mt-1 py-2 bg-slate-200 w-screen rounded-md pl-1">
+        <View className="mt-1 py-1 bg-slate-200 w-screen rounded-md pl-1">
           <View className="flex-row items-center">
             {/* <Text className="px-2 bg-slate-200 font-extrabold">Now</Text> */}
             <View className="relative">
@@ -149,6 +126,28 @@ export default function Playlist({ type, api, country, alias }) {
                 <Text> {item.name.split("-")[0]} - </Text>
                 <Text className="font-semibold">{item.name.split("-")[1]}</Text>
               </Text>
+            </View>
+          </View>
+        </View>
+      );
+    } else if (type == "list") {
+      return (
+        <TouchableOpacity
+          className="flex-row mt-1 py-2 bg-slate-200 w-fit"
+          // onLongPress={() => trackOpts(item, index)}
+          // onLongPress={() => saveTrack(index, item)}
+        >
+          <View className="flex-row py-1 pl-1.5 items-center">
+            {/* <Text className={`${saveBtn.btnColor} pr-1`}>
+                  <IconAD name="hearto" size={20} />
+                  <IconAD name={index === itemIndex && saveBtn.btnIcon} size={20} />
+                </Text> */}
+            <Text className="pl-2 pr-3 bg-slate-200 font-extralight text-xs">
+              {item.created}
+            </Text>
+            <View className="w-screen flex-col relative">
+              <Text>{item.name.split("-")[0]}</Text>
+              <Text className="font-semibold">{item.name.split("- ")[1]}</Text>
             </View>
           </View>
         </TouchableOpacity>

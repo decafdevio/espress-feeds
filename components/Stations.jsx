@@ -26,7 +26,7 @@ export default Stations = ({ navigation, route, onPress }) => {
             }
           />
         )}
-        keyExtractor={(item) => item.name}
+        keyExtractor={(item) => item.title}
       />
     </SafeAreaView>
   );
@@ -47,7 +47,7 @@ function Item({ item, onPress }) {
   return (
     <>
       <TouchableOpacity
-        className="flex-row mt-1 bg-slate-100 rounded-lg"
+        className="flex-row mt-0.5 bg-slate-100"
         onPress={onPress}
       >
         <View className="flex-row p-3">
@@ -60,8 +60,8 @@ function Item({ item, onPress }) {
             }}
           />
           <View className="pl-3">
-            <Text className="font-semibold text-lg">{item.name}</Text>
-            <Text className="text-xs font-extralight">
+            <Text className="font-semibold text-lg">{item.title}</Text>
+            <Text className="text-xs font-extralight capitalize">
               {genreFilter(item.genre)}
             </Text>
             <View className="flex-row">

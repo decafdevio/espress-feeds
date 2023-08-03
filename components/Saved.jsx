@@ -25,7 +25,6 @@ export default function Saved() {
       try {
         const asyncKeys = await AsyncStorage.getAllKeys();
         setSaved(await AsyncStorage.multiGet(asyncKeys));
-        console.log(saved);
       } catch (error) {
         console.error(error);
       }
@@ -34,7 +33,6 @@ export default function Saved() {
   }, [isFocused]);
 
   useEffect(() => {
-    console.log("refresh");
     setRefresh(false);
   }, [refresh]);
 
@@ -69,16 +67,15 @@ export default function Saved() {
 
     return (
       <TouchableOpacity
-        className="flex-row mt-1 bg-slate-100 rounded-lg py-3"
-        // onPress={() => navigation.navigate("WebPage")}
+        className="flex-row mt-0.5 bg-slate-100 py-3"
         onLongPress={() => {
           removeItem(itemKey, item);
         }}
+        delayLongPress={500}
       >
         <View className="pl-3">
-          {/* <Text className="font-bold text-xl">{item}</Text> */}
-          <Text> {artist}</Text>
-          <Text className="text-base font-semibold">{track}</Text>
+          <Text className="text-xs"> {artist}</Text>
+          <Text className="text-xs font-semibold">{track}</Text>
         </View>
         <View className="absolute flex-row right-3 top-4">
           <TouchableOpacity
@@ -88,7 +85,7 @@ export default function Saved() {
             }
           >
             <Text className="text-slate-400">
-              <IconFA name="spotify" size={30} />
+              <IconFA name="spotify" size={27} />
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -99,7 +96,7 @@ export default function Saved() {
             }
           >
             <Text className="text-slate-400">
-              <IconFA name="youtube-play" size={30} />
+              <IconFA name="youtube-play" size={27} />
             </Text>
           </TouchableOpacity>
           {/* <Text className="font-semibold py-1">Now </Text> */}
@@ -114,7 +111,6 @@ export default function Saved() {
 
   return (
     <SafeAreaView className="bg-slate-400 flex-1">
-      <View className="h-2"></View>
       <FlatList
         style={{ flex: 1 }}
         data={saved}

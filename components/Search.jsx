@@ -12,6 +12,7 @@ import {
 import { useEffect } from "react";
 import { useState } from "react";
 import Playlist from "./Playlist";
+import IconMI from "react-native-vector-icons/MaterialIcons";
 
 export default Search = ({ navigation, route, onPress }) => {
   const [stationList, setStationList] = useState([]);
@@ -26,7 +27,7 @@ export default Search = ({ navigation, route, onPress }) => {
         let res = await fetch(address);
         let data = await res.json();
         const tmpList = await data.stations;
-        await setStationList(tmpList.slice(0, 15));
+        await setStationList(tmpList.slice(0, 50));
         // console.log(stationList);
         return stationList;
       } catch (error) {
@@ -69,36 +70,25 @@ export default Search = ({ navigation, route, onPress }) => {
 
     return (
       <TouchableOpacity
-        className="flex-row mt-1 bg-slate-100 rounded-lg"
+        className="flex-row mt-0.5 px-1 bg-slate-100"
         onPress={onPress}
       >
-        <View className="flex-row p-3">
-          {/* <Image
-                source={{ uri: item.albumart }}
-                className="rounded"
-                style={{
-                  width: 80,
-                  height: 80,
-                }}
-              /> */}
-          <View className="pl-2">
-            <Text>
-              <Text className="font-bold text-lg">{item.title}</Text>
-              <Text className="pl-2 font-extralight"> - {item.cityName}</Text>
-            </Text>
-            <View className="flex-row">
+        <View className="flex-row p-1">
+          <View className="pl-1">
+            <View className="flex-row mb-1.5">
+              <Text className="font-semibold">{item.title}</Text>
+              <Text className="pl-2 font-extralight">- {item.cityName}</Text>
+            </View>
+            <View className="">
               <Text>
                 <Playlist
                   type="search"
                   api="https://onlineradiobox.com/json/"
                   country="uk/"
-                  alias={`${item.alias}/`}
+                  alias={item.alias}
                 />
               </Text>
             </View>
-            {/* <Text className="mt-1 text-xs font-extralight">
-              {genreFilter(item.genres)}
-            </Text> */}
           </View>
         </View>
       </TouchableOpacity>
@@ -132,7 +122,7 @@ export default Search = ({ navigation, route, onPress }) => {
           )}
           keyExtractor={(item) => item.alias}
         />
-        <View className="h-3.5"></View>
+        <View className="h-1.5"></View>
       </SafeAreaView>
     </>
   );
