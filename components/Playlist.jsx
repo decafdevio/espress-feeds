@@ -4,7 +4,7 @@ import {
   TouchableOpacity,
   Text,
   FlatList,
-  // Clipboard,
+  Clipboard, // depreciated, community pkg needed
   Alert,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -13,11 +13,33 @@ import IconAD from "react-native-vector-icons/AntDesign";
 
 export default function Playlist({ type, api, country, alias }) {
   const [plist, setPlist] = useState([]);
+
+  // experimental 'heart' to save --
   const [itemIndex, setItemIndex] = useState(null);
   const [saveBtn, setSaveBtn] = useState({
     btnColor: "text-red-500",
     btnIcon: "heart",
   });
+
+  const saveTrack = (index, item) => {
+    setSaveBtn({
+      btnColor: "text-red-500",
+      btnIcon: "heart",
+    });
+    saveBtn.btnColor === "text-slate-400"
+      ? setSaveBtn({
+          btnColor: "text-red-500",
+          btnIcon: "heart",
+        })
+      : setSaveBtn({
+          btnColor: "text-slate-400",
+          btnIcon: "hearto",
+        });
+    console.log("track saved: ", track, artist);
+    setItemIndex(index);
+    console.log("track: ", index, item);
+  };
+  // -->
 
   const address =
     api +
@@ -47,31 +69,13 @@ export default function Playlist({ type, api, country, alias }) {
         return;
       }
     }
+    // refresh playlist
     setInterval(() => {
       fetchAPI();
     }, 10 * 1000);
 
     fetchAPI();
   }, []);
-
-  const saveTrack = (index, item) => {
-    setSaveBtn({
-      btnColor: "text-red-500",
-      btnIcon: "heart",
-    });
-    // saveBtn.btnColor === "text-slate-400"
-    //   ? setSaveBtn({
-    //       btnColor: "text-red-500",
-    //       btnIcon: "heart",
-    //     })
-    //   : setSaveBtn({
-    //       btnColor: "text-slate-400",
-    //       btnIcon: "hearto",
-    //     });
-    // console.log("track saved: ", track, artist)
-    setItemIndex(index);
-    // console.log("track: ", index, item);
-  };
 
   const trackOpts = async (item, index) => {
     const asyncKeys = await AsyncStorage.getAllKeys();
@@ -134,8 +138,7 @@ export default function Playlist({ type, api, country, alias }) {
       return (
         <TouchableOpacity
           className="flex-row mt-1 py-2 bg-slate-200 w-fit"
-          // onLongPress={() => trackOpts(item, index)}
-          // onLongPress={() => saveTrack(index, item)}
+          onLongPress={() => trackOpts(item, index)}
         >
           <View className="flex-row py-1 pl-1.5 items-center">
             {/* <Text className={`${saveBtn.btnColor} pr-1`}>

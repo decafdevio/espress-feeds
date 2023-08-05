@@ -9,6 +9,8 @@ import {
 import feeds from "../data/feeds.json";
 import Playlist from "./Playlist";
 
+import IconAD from "react-native-vector-icons/AntDesign";
+
 export default Stations = ({ navigation, route, onPress }) => {
   return (
     <SafeAreaView className="bg-slate-400 flex-1 -my-1.5">
@@ -35,7 +37,6 @@ export default Stations = ({ navigation, route, onPress }) => {
 function Item({ item, onPress }) {
   const genreFilter = (genreList) => {
     let genres = null;
-
     for (let i = 0; i < genreList.length; i++) {
       genres
         ? (genres = genres + ", " + genreList[i])
@@ -45,41 +46,34 @@ function Item({ item, onPress }) {
   };
 
   return (
-    <>
-      <TouchableOpacity
-        className="flex-row mt-0.5 bg-slate-100"
-        onPress={onPress}
-      >
-        <View className="flex-row p-3">
-          <Image
-            source={{ uri: item.albumart }}
-            className="rounded"
-            style={{
-              width: 80,
-              height: 80,
-            }}
-          />
-          <View className="pl-3">
-            <Text className="font-semibold text-lg">{item.title}</Text>
-            <Text className="text-xs font-extralight capitalize">
-              {genreFilter(item.genre)}
-            </Text>
-            <View className="flex-row">
-              <Playlist
-                type="stations"
-                api="https://onlineradiobox.com/json/"
-                country="uk/"
-                alias={`${item?.alias}`}
-              />
-
-              {/* <Text className="font-semibold py-1">Now </Text>
-              <Text className="p-1 bg-slate-200 text-gray-800 rounded">
-                {item.website}
-              </Text> */}
-            </View>
+    <TouchableOpacity
+      className="flex-row mt-0.5 bg-slate-100"
+      onPress={onPress}
+    >
+      <View className="flex-row p-3">
+        <Image
+          source={{ uri: item.albumart }}
+          className="rounded"
+          style={{
+            width: 80,
+            height: 80,
+          }}
+        />
+        <View className="pl-3">
+          <Text className="font-semibold text-lg">{item.title}</Text>
+          <Text className="text-xs font-extralight capitalize">
+            {genreFilter(item.genre)}
+          </Text>
+          <View className="flex-row">
+            <Playlist
+              type="stations"
+              api="https://onlineradiobox.com/json/"
+              country="uk/"
+              alias={`${item?.alias}`}
+            />
           </View>
         </View>
-      </TouchableOpacity>
-    </>
+      </View>
+    </TouchableOpacity>
   );
 }

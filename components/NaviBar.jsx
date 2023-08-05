@@ -9,7 +9,6 @@ const track = new Audio.Sound();
 export default function NaviBar({ props }) {
   const navigation = useNavigation();
   const [button, setButton] = useState("play-circle-outline");
-  const [newScreen, setNewScreen] = useState("");
 
   useEffect(() => {
     if (props) {
@@ -31,6 +30,10 @@ export default function NaviBar({ props }) {
       setButton("stop-circle-outline");
     } catch (error) {
       console.error(error);
+      setButton("alert-circle-outline");
+      setTimeout(() => {
+        setButton("play-circle-outline");
+      }, 2 * 1000);
     }
   }
 
@@ -60,29 +63,24 @@ export default function NaviBar({ props }) {
     }
   }
 
-  function preSetScreen(screen) {
-    console.log("navigation");
-    setNewScreen(screen);
-    let screenName = newScreen;
-    navigation.navigate(screenName);
-  }
-
   return (
     <SafeAreaView>
       <View className="flex-row justify-around pt-3">
+        {/* NAV 1 */}
         <TouchableOpacity onPress={() => navigation.navigate("StationsStack")}>
           <View className="items-center">
             <IconAD name="staro" size={25} color="#0c4a6e" />
             <Text className="text-sky-900 text-xs p-1">Stations</Text>
           </View>
         </TouchableOpacity>
+        {/* NAV 2 */}
         <TouchableOpacity onPress={() => navigation.navigate("SavedStack")}>
           <View className="items-center my-[2px]">
             <IconAD name="hearto" size={23} color="#0c4a6e" />
             <Text className="text-sky-900 text-xs p-1">Saved</Text>
           </View>
         </TouchableOpacity>
-
+        {/* NAV PLAYER */}
         <TouchableOpacity
           onPress={() => {
             playAudio();
@@ -99,13 +97,14 @@ export default function NaviBar({ props }) {
             />
           </View>
         </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => navigation.navigate("Search")}>
+        {/* NAV 3 */}
+        <TouchableOpacity onPress={() => navigation.navigate("SearchStack")}>
           <View className="items-center">
             <IconAD name="search1" size={25} color="#0c4a6e" />
             <Text className="text-sky-900 text-xs p-1">Search</Text>
           </View>
         </TouchableOpacity>
+        {/* NAV 4 */}
         <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
           <View className="items-center">
             <IconAD name="setting" size={25} color="#0c4a6e" />

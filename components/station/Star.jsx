@@ -2,7 +2,7 @@ import { useState } from "react";
 import { View, TouchableOpacity, Text } from "react-native";
 import IconAD from "react-native-vector-icons/AntDesign";
 
-export default function Star() {
+export default Star = () => {
   const [favBtn, setFavBtn] = useState({
     btnColor: "text-slate-100",
     btnIcon: "staro",
@@ -28,4 +28,4 @@ export default function Star() {
       </View>
     </TouchableOpacity>
   );
-}
+};

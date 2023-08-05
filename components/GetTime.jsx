@@ -10,6 +10,5 @@ export default function GetTime(track) {
         : "0" + created.getMinutes());
     item.created = trackTime;
   }
-  //   console.log(track);
   return track;
 }

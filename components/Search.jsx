@@ -28,7 +28,6 @@ export default Search = ({ navigation, route, onPress }) => {
         let data = await res.json();
         const tmpList = await data.stations;
         await setStationList(tmpList.slice(0, 50));
-        // console.log(stationList);
         return stationList;
       } catch (error) {
         console.error(error);

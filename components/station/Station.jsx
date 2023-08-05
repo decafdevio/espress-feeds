@@ -10,8 +10,6 @@ import Info from "./Info";
 import Star from "./Star";
 import Playlist from "../Playlist";
 import { useRoute } from "@react-navigation/native";
-import { useEffect } from "react";
-import { useState } from "react";
 
 export default function Station({
   api,
@@ -22,7 +20,6 @@ export default function Station({
   playTrack,
 }) {
   const route = useRoute();
-  const [uri, setUri] = useState("");
 
   async function fetchStation(alias) {
     const widgetAPI = api + country + alias + "/widget/";
@@ -32,29 +29,13 @@ export default function Station({
         let data = await res.json();
         const stream = await data.streamURL;
         console.log("stream: ", stream);
-        // setUri(stream);
         playTrack(stream);
-        // return stream;
       } catch (error) {
         console.error(error);
         return;
       }
     }
   }
-
-  const onPressPlay = (uri) => {
-    // let feedAudio;
-    // if (streamURL) {
-    //   feedAudio = streamURL;
-    //   console.log("streamURL: ", streamURL);
-    // } else {
-    //   feedAudio = route.params.item.uri;
-    // }
-    const feedAudio = uri;
-    console.log(feedAudio);
-
-    playTrack(uri);
-  };
 
   return (
     <>
