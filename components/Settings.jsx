@@ -5,9 +5,7 @@ import {
   Platform,
   Text,
   Linking,
-  Pressable,
   SafeAreaView,
-  TouchableOpacity,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -32,9 +30,8 @@ export default function Settings() {
             ]
           )
         }
-        title="Developer Links"
+        title="GitHub"
         className="text-xs"
-        // color="black"
       />
     );
   };
@@ -42,7 +39,8 @@ export default function Settings() {
   const DevGetData = () => {
     const get = async () => {
       const asyncKeys = await AsyncStorage.getAllKeys(),
-        result = await AsyncStorage.multiGet(asyncKeys);
+        result = await AsyncStorage.multiGet(asyncKeys),
+        keyTitle = await AsyncStorage.getItem();
       let mList = "";
 
       result.map((item) => {
@@ -50,18 +48,10 @@ export default function Settings() {
       });
       mList !== "" ? Alert.alert(mList) : Alert.alert("No data");
     };
-    return (
-      // <Button onPress={get} title="Get Storage" />
-      <TouchableOpacity
-        className="border-2 border-slate-400 h-8 px-4 items-center justify-center rounded-md mx-3 mt-3"
-        onPress={get}
-      >
-        <Text className="font-semibold text-xs">Test Storage</Text>
-      </TouchableOpacity>
-    );
+    return <Button onPress={get} title="Test Storage" className="text-xs" />;
   };
 
-  const DevCleardata = () => {
+  const DevClearData = () => {
     const clear = async () => {
       const asyncKeys = await AsyncStorage.getAllKeys();
 
@@ -73,34 +63,42 @@ export default function Settings() {
             await AsyncStorage.multiRemove(asyncKeys);
           }
         }
-        Alert.alert("Data has been cleared");
+        Alert.alert("Data cleared");
       } catch (error) {
         console.error(error);
       }
     };
-    return (
-      // <Button className="bg-slate-50" onPress={clear} title="Empty Storage" />
-      <TouchableOpacity
-        className="border-2 border-slate-400 h-8 px-4 items-center justify-center rounded-md mx-3 mt-3"
-        onPress={clear}
-      >
-        <Text className="font-semibold text-xs">Empty Storage</Text>
-      </TouchableOpacity>
-    );
+    return <Button onPress={clear} title="Clear Storage" className="text-xs" />;
   };
 
   return (
-    <SafeAreaView>
-      <View className="bg-slate-200 p-3 w-screen items-center">
+    <SafeAreaView className="bg-slate-400 flex-1">
+      <View className="bg-slate-100 p-3 w-screen mt-0.5">
+        <Text className="text-base">Playlist Options</Text>
+        <View className="flex-row">
+          <DevGetData />
+          <DevClearData />
+        </View>
+      </View>
+
+      <View className="bg-slate-100 p-3 w-screen mt-0.5">
+        <Text className="text-base">Developer Links</Text>
+        <View className="flex-row">
+          <InfoBtn />
+        </View>
+      </View>
+
+      <View className="bg-sky-100 p-3 w-screen mt-0.5">
         <Text className="text-base">Developer Options</Text>
         <View className="flex-row">
           <DevGetData />
-          <DevCleardata />
+          <DevClearData />
         </View>
       </View>
-      <View className="p-3 flex items-center">
+
+      {/* <View className="p-3 flex items-center">
         <InfoBtn />
-      </View>
+      </View> */}
     </SafeAreaView>
   );
 }

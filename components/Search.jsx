@@ -4,11 +4,13 @@ import {
   Alert,
   TouchableOpacity,
   Text,
+  TextInput,
   Linking,
   SafeAreaView,
   FlatList,
   Image,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from "react";
 import { useState } from "react";
 import Playlist from "./Playlist";
@@ -16,6 +18,8 @@ import IconMI from "react-native-vector-icons/MaterialIcons";
 
 export default Search = ({ navigation, route, onPress }) => {
   const [stationList, setStationList] = useState([]);
+  const [searchFilter, setSearchFilter] = useState([]);
+  const [searchTitle, setSearchTitle] = useState("");
   const [countryCode, setCountryCode] = useState("uk/");
 
   const api = "https://onlineradiobox.com/json/";
@@ -27,7 +31,8 @@ export default Search = ({ navigation, route, onPress }) => {
         let res = await fetch(address);
         let data = await res.json();
         const tmpList = await data.stations;
-        await setStationList(tmpList.slice(0, 50));
+        // await setStationList(tmpList.slice(0, 50));
+        await setStationList(tmpList);
         return stationList;
       } catch (error) {
         console.error(error);
@@ -36,6 +41,8 @@ export default Search = ({ navigation, route, onPress }) => {
     }
     fetchAPI();
   }, []);
+
+  useEffect(() => {}, [searchFilter]);
 
   async function fetchStation(alias) {
     const widgetAPI = api + countryCode + alias + "/widget/";
@@ -94,35 +101,45 @@ export default Search = ({ navigation, route, onPress }) => {
     );
   }
 
+  const textListener = async (e) => {
+    e = e.toLowerCase();
+    if (e.length >= 3) {
+      setSearchFilter(
+        stationList.filter((i) => i.title.toLowerCase().includes(e))
+      );
+    } else {
+      setSearchFilter([]);
+    }
+  };
+
   return (
-    <>
-      <View className="px-6 py-3 flex justify-center">
-        <Text>Search Criteria</Text>
-        <TouchableOpacity className="bg-slate-400 p-2 rounded-lg">
-          <Text className="text-slate-100 font-bold">UK</Text>
-        </TouchableOpacity>
-        {/* <Button title="UK" color="#841584" className="bg-slate-400" /> */}
+    <SafeAreaView className="bg-slate-400 flex-1 -my-1.5">
+      <View className="py-4 flex items-center">
+        <TextInput
+          onChangeText={(e) => textListener(e)}
+          placeholder="Search Station / Genre"
+          className="text-lg"
+          style={{ color: "white" }}
+        />
       </View>
 
-      <SafeAreaView className="bg-slate-400 flex-1 -my-1.5">
-        <FlatList
-          style={{ flex: 1 }}
-          data={stationList}
-          onEndReachedThreshold={0.9}
-          renderItem={({ item }) => (
-            <Item
-              item={item}
-              onPress={() =>
-                navigation.navigate("Station", {
-                  item,
-                })
-              }
-            />
-          )}
-          keyExtractor={(item) => item.alias}
-        />
-        <View className="h-1.5"></View>
-      </SafeAreaView>
-    </>
+      <FlatList
+        style={{ flex: 1 }}
+        data={searchFilter}
+        onEndReachedThreshold={0.9}
+        renderItem={({ item }) => (
+          <Item
+            item={item}
+            onPress={() =>
+              navigation.navigate("Station", {
+                item,
+              })
+            }
+          />
+        )}
+        keyExtractor={(item) => item.alias}
+      />
+      <View className="h-1.5"></View>
+    </SafeAreaView>
   );
 };

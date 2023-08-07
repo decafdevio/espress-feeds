@@ -1,8 +1,8 @@
 # Espresso Feeds App [iOS/Android]
 
 ![reactnative](https://img.shields.io/badge/React%20Native-0.70.8-orange?style=flat-square&logo=react)
-![expo](https://img.shields.io/badge/Expo-47.0.12-orange?style=flat-square&logo=expo)
-![nativewind](https://img.shields.io/badge/NativeWind-2.0.11-orange?style=flat-square&logo=tailwindcss)   
+![expo](https://img.shields.io/badge/Expo-47.0.12-orange?style=flat-square&logo=expo)   
+![nativewind](https://img.shields.io/badge/NativeWind-2.0.11-blue?style=flat-square&logo=tailwindcss)
 ![expo-av](https://img.shields.io/badge/Expo%20AV-13.0.3-blue?style=flat-square&logo=expo)   
 ![async](https://img.shields.io/badge/Async%20Storage-1.17.3-green?style=flat-square&logo=react)
 ![clipboard](https://img.shields.io/badge/Clipboard-1.11-green?style=flat-square&logo=react)
