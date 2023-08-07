@@ -6,7 +6,9 @@ import {
   Text,
   Linking,
   SafeAreaView,
+  Switch,
 } from "react-native";
+import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Settings() {
@@ -71,13 +73,33 @@ export default function Settings() {
     return <Button onPress={clear} title="Clear Storage" className="text-xs" />;
   };
 
+  const PlaylistOpts = () => {
+    const [isEnabled, setIsEnabled] = useState(false);
+    const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+    return (
+      <>
+        <Text className="text-base pl-2 pt-2">
+          Only show stations with playlists
+        </Text>
+        <Switch
+          trackColor={{ false: "#767577", true: "#81b0ff" }}
+          thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={toggleSwitch}
+          value={isEnabled}
+          style={{ transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }] }}
+          className="absolute right-0 mt-1"
+        />
+      </>
+    );
+  };
+
   return (
     <SafeAreaView className="bg-slate-400 flex-1">
       <View className="bg-slate-100 p-3 w-screen mt-0.5">
         <Text className="text-base">Playlist Options</Text>
         <View className="flex-row">
-          <DevGetData />
-          <DevClearData />
+          <PlaylistOpts />
         </View>
       </View>
 
