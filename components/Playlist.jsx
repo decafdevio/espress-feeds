@@ -164,6 +164,7 @@ export default function Playlist({ type, api, country, alias }) {
       data={plist}
       renderItem={Item}
       keyExtractor={(item, index) => index.toString()}
+      initialNumToRender={15}
     />
   );
 }
