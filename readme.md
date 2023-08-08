@@ -16,15 +16,18 @@ Espresso Feeds was my first mobile app and it was developed in React Native. It'
 
 ## Dev Log
   - [x] Nest Screen stack inside Tab stack
-  - [ ] Heart icon to save track
+ ~~ - [ ] Heart icon to save track~~
   - [x] Pass route props to search results
-  - [ ] Manage storage with arrays
-  - [ ] Complete storage keys
-  - [ ] Manage stations from storage
+  - [x] Manage storage with arrays
+  - [x] Complete storage keys
+  - [x] Manage stations from storage
   - [ ] Manually add station
+  - [ ] Display current station/track playing somewhere
+  - [ ] Settings: Custom values & switches
 
 __BUGS__
-  - [ ] No refresh on screen focus
+  - [x] No refresh on screen focus
+  - [ ] Error: Prevent duplicates
 
 ## Support Me
 <a href="https://www.buymeacoffee.com/decafdevio"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" width="200" /></a>
