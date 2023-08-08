@@ -53,7 +53,7 @@ export default function Station({
             Play <Text className="font-bold">{route.params.item.title}</Text>
           </Text>
         </TouchableOpacity>
-        <Star />
+        <Star props={route.params.item} />
       </View>
       <View className="mb-[230px]">
         <Text>
