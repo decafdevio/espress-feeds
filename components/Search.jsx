@@ -9,6 +9,8 @@ import {
   SafeAreaView,
   FlatList,
   Image,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from "react";
@@ -74,30 +76,39 @@ export default Search = ({ navigation, route, onPress }) => {
       return genres;
     };
 
+    async function kDissOnPress() {
+      await Keyboard.dismiss;
+      {
+        onPress;
+      }
+    }
+
     return (
-      <TouchableOpacity
-        className="flex-row mt-0.5 px-1 bg-slate-100"
-        onPress={onPress}
-      >
-        <View className="flex-row p-1">
-          <View className="pl-1">
-            <View className="flex-row mb-1.5">
-              <Text className="font-semibold">{item.title}</Text>
-              <Text className="pl-2 font-extralight">- {item.cityName}</Text>
-            </View>
-            <View className="">
-              <Text>
-                <Playlist
-                  type="search"
-                  api="https://onlineradiobox.com/json/"
-                  country="uk/"
-                  alias={item.alias}
-                />
-              </Text>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <TouchableOpacity
+          className="flex-row mt-0.5 px-1 bg-slate-100"
+          onPress={onPress}
+        >
+          <View className="flex-row p-1">
+            <View className="pl-1">
+              <View className="flex-row mb-1.5">
+                <Text className="font-semibold">{item.title}</Text>
+                <Text className="pl-2 font-extralight">- {item.cityName}</Text>
+              </View>
+              <View className="">
+                <Text>
+                  <Playlist
+                    type="search"
+                    api="https://onlineradiobox.com/json/"
+                    country="uk/"
+                    alias={item.alias}
+                  />
+                </Text>
+              </View>
             </View>
           </View>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      </TouchableWithoutFeedback>
     );
   }
 
@@ -114,11 +125,12 @@ export default Search = ({ navigation, route, onPress }) => {
 
   return (
     <SafeAreaView className="bg-slate-400 flex-1 -my-1.5">
-      <View className="py-4 flex items-center">
+      <View className="py-4 flex items-center bg-slate-500">
         <TextInput
           onChangeText={(e) => textListener(e)}
           placeholder="Search Station / Genre"
-          className="text-lg"
+          placeholderTextColor={"whitesmoke"}
+          className="text-lg min-w-full text-center"
           style={{ color: "white" }}
         />
       </View>
@@ -127,6 +139,7 @@ export default Search = ({ navigation, route, onPress }) => {
         style={{ flex: 1 }}
         data={searchFilter}
         onEndReachedThreshold={0.9}
+        keyboardShouldPersistTaps="always"
         renderItem={({ item }) => (
           <Item
             item={item}
