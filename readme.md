@@ -16,7 +16,7 @@ Espresso Feeds was my first mobile app and it was developed in React Native. It'
 
 ## Dev Log
   - [x] Nest Screen stack inside Tab stack
-  - [ ] ~~Heart icon to save track~~
+  - [ ] ~~Heart icon to save track~~ Swipe Gestures
   - [x] Pass route props to search results
   - [x] Manage storage with arrays
   - [x] Complete storage keys
