@@ -33,6 +33,7 @@ export default function Settings() {
           )
         }
         title="GitHub"
+        color="#0c4a6e"
         className="text-xs"
       />
     );
@@ -41,16 +42,22 @@ export default function Settings() {
   const DevGetData = () => {
     const get = async () => {
       const asyncKeys = await AsyncStorage.getAllKeys(),
-        result = await AsyncStorage.multiGet(asyncKeys),
-        keyTitle = await AsyncStorage.getItem();
+        result = await AsyncStorage.multiGet(asyncKeys);
       let mList = "";
-
+      console.log(result);
       result.map((item) => {
         mList = mList + item[1] + "\n";
       });
-      mList !== "" ? Alert.alert(mList) : Alert.alert("No data");
+      mList ? Alert.alert(mList) : Alert.alert("No data");
     };
-    return <Button onPress={get} title="Test Storage" className="text-xs" />;
+    return (
+      <Button
+        onPress={get}
+        title="Test Storage"
+        color="#0c4a6e"
+        className="text-xs"
+      />
+    );
   };
 
   const DevClearData = () => {
@@ -70,27 +77,51 @@ export default function Settings() {
         console.error(error);
       }
     };
-    return <Button onPress={clear} title="Clear Storage" className="text-xs" />;
+    return (
+      <Button
+        onPress={clear}
+        title="Clear Storage"
+        color="#0c4a6e"
+        className="text-xs"
+      />
+    );
   };
 
-  const PlaylistOpts = () => {
+  const PlaylistListOnly = () => {
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
     return (
-      <>
-        <Text className="text-base pl-2 pt-2">
-          Only show stations with playlists
-        </Text>
+      <View className="pl-2 pt-2 w-screen">
+        <Text className="text-base">Show only stations with playlists</Text>
         <Switch
-          trackColor={{ false: "#767577", true: "#81b0ff" }}
+          trackColor={{ false: "#767577", true: "#94a3b8" }}
           thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
           ios_backgroundColor="#3e3e3e"
           onValueChange={toggleSwitch}
           value={isEnabled}
           style={{ transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }] }}
-          className="absolute right-0 mt-1"
+          className="absolute right-0 mt-1 mr-5"
         />
-      </>
+      </View>
+    );
+  };
+
+  const PlaylistAutoPlay = () => {
+    const [isEnabled, setIsEnabled] = useState(false);
+    const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+    return (
+      <View className="pl-2 pt-2 w-screen">
+        <Text className="text-base">Auto play station on load</Text>
+        <Switch
+          trackColor={{ false: "#767577", true: "#94a3b8" }}
+          thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={toggleSwitch}
+          value={isEnabled}
+          style={{ transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }] }}
+          className="absolute right-0 mt-1 mr-5"
+        />
+      </View>
     );
   };
 
@@ -98,15 +129,9 @@ export default function Settings() {
     <SafeAreaView className="bg-slate-400 flex-1">
       <View className="bg-slate-100 p-3 w-screen mt-0.5">
         <Text className="text-base">Playlist Options</Text>
-        <View className="flex-row">
-          <PlaylistOpts />
-        </View>
-      </View>
-
-      <View className="bg-slate-100 p-3 w-screen mt-0.5">
-        <Text className="text-base">Developer Links</Text>
-        <View className="flex-row">
-          <InfoBtn />
+        <View className="flex">
+          <PlaylistListOnly />
+          <PlaylistAutoPlay />
         </View>
       </View>
 
@@ -118,9 +143,12 @@ export default function Settings() {
         </View>
       </View>
 
-      {/* <View className="p-3 flex items-center">
-        <InfoBtn />
-      </View> */}
+      <View className="bg-slate-100 p-3 w-screen mt-0.5">
+        <Text className="text-base">Support Developer</Text>
+        <View className="flex-row">
+          <InfoBtn />
+        </View>
+      </View>
     </SafeAreaView>
   );
 }
