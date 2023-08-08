@@ -78,9 +78,6 @@ export default function Playlist({ type, api, country, alias }) {
   }, []);
 
   const trackOpts = async (item, index) => {
-    const asyncKeys = await AsyncStorage.getAllKeys();
-    const count = asyncKeys.length + 1;
-
     Alert.alert(item.name, "", [
       {
         text: "Copy",
@@ -91,9 +88,11 @@ export default function Playlist({ type, api, country, alias }) {
         text: "Save Track",
         onPress: async () => {
           try {
-            const ifExists = await AsyncStorage.getItem("saved");
+            // const ifSaveExists = await AsyncStorage.getItem("saved");
+            const tempSave = await AsyncStorage.getItem("saved");
+            const ifSaveExists = await tempSave;
 
-            if (ifExists) {
+            if (ifSaveExists) {
               let response = await AsyncStorage.getItem("saved");
               let parse = await JSON.parse(response);
               parse.unshift(item);

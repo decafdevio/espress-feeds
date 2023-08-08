@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   SafeAreaView,
   Text,
@@ -6,18 +7,47 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useIsFocused } from "@react-navigation/native";
 import feeds from "../data/feeds.json";
 import Playlist from "./Playlist";
-
 import IconAD from "react-native-vector-icons/AntDesign";
 
 export default Stations = ({ navigation, route, onPress }) => {
+  const [saved, setSaved] = useState("");
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    const get = async () => {
+      try {
+        const response = await JSON.parse(await AsyncStorage.getItem("fave"));
+        setSaved(response);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    get();
+  }, [isFocused]);
+
+  useEffect(() => {
+    const save = async () => {
+      try {
+        const response = await JSON.parse(await AsyncStorage.getItem("fave"));
+        response !== null &&
+          (await AsyncStorage.setItem("fave", JSON.stringify(saved)));
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    save();
+  }, [saved]);
+
   return (
     <SafeAreaView className="bg-slate-400 flex-1 -my-1.5">
       <View className="h-2"></View>
       <FlatList
         style={{ flex: 1 }}
-        data={feeds}
+        data={saved}
         renderItem={({ item }) => (
           <Item
             item={item}
@@ -35,15 +65,15 @@ export default Stations = ({ navigation, route, onPress }) => {
 };
 
 function Item({ item, onPress }) {
-  const genreFilter = (genreList) => {
-    let genres = null;
-    for (let i = 0; i < genreList.length; i++) {
-      genres
-        ? (genres = genres + ", " + genreList[i])
-        : (genres = genreList[i]);
-    }
-    return genres;
-  };
+  // const genreFilter = (genreList) => {
+  //   let genres = null;
+  //   for (let i = 0; i < genreList.length; i++) {
+  //     genres
+  //       ? (genres = genres + ", " + genreList[i])
+  //       : (genres = genreList[i]);
+  //   }
+  //   return genres;
+  // };
 
   return (
     <TouchableOpacity
@@ -51,19 +81,19 @@ function Item({ item, onPress }) {
       onPress={onPress}
     >
       <View className="flex-row p-3">
-        <Image
+        {/* <Image
           source={{ uri: item.albumart }}
           className="rounded"
           style={{
             width: 80,
             height: 80,
           }}
-        />
+        /> */}
         <View className="pl-3">
           <Text className="font-semibold text-lg">{item.title}</Text>
-          <Text className="text-xs font-extralight capitalize">
+          {/* <Text className="text-xs font-extralight capitalize">
             {genreFilter(item.genre)}
-          </Text>
+          </Text> */}
           <View className="flex-row">
             <Playlist
               type="stations"

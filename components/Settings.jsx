@@ -41,14 +41,18 @@ export default function Settings() {
 
   const DevGetData = () => {
     const get = async () => {
-      const response = await AsyncStorage.getItem("saved");
-      const asyncPKey = JSON.parse(response);
-
-      let mList = "";
-      asyncPKey?.map((item) => {
-        mList = mList + item.name + "\n";
-      });
-      mList ? Alert.alert(mList) : Alert.alert("No data");
+      try {
+        const pRes = await AsyncStorage.getItem("saved");
+        const asyncPKey = JSON.parse(pRes);
+        // console.log(pRes);
+        let mList = null;
+        asyncPKey?.map((item) => {
+          mList = mList + item.name + "\n";
+        });
+        mList ? Alert.alert(mList) : Alert.alert("No data");
+      } catch (error) {
+        console.error(error);
+      }
     };
 
     return (
@@ -74,6 +78,52 @@ export default function Settings() {
       <Button
         onPress={clear}
         title="Clear Playlist Storage"
+        color="#0c4a6e"
+        className="text-xs"
+      />
+    );
+  };
+
+  const DevGetFave = () => {
+    const get = async () => {
+      try {
+        const response = await AsyncStorage.getItem("fave");
+        const asyncFaves = JSON.parse(response);
+
+        let fList = null;
+        asyncFaves?.map((item) => {
+          console.log(item);
+          fList = fList + item.title + "\n";
+        });
+        fList ? Alert.alert(fList) : Alert.alert("No data");
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    return (
+      <Button
+        onPress={get}
+        title="Favourite Storage"
+        color="#0c4a6e"
+        className="text-xs"
+      />
+    );
+  };
+
+  const DevClearFave = () => {
+    const clear = async () => {
+      try {
+        await AsyncStorage.removeItem("fave");
+        Alert.alert("Favourites cleared");
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    return (
+      <Button
+        onPress={clear}
+        title="Clear Favourite Storage"
         color="#0c4a6e"
         className="text-xs"
       />
@@ -118,27 +168,67 @@ export default function Settings() {
     );
   };
 
+  const DevGetAllKeys = () => {
+    const all = async () => {
+      try {
+        const allKeys = await AsyncStorage.getAllKeys();
+        console.log(allKeys);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    const vals = async () => {
+      try {
+        const allKeys = await AsyncStorage.getAllKeys();
+        const result = await AsyncStorage.multiGet(allKeys);
+        console.log(result);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    return (
+      <>
+        <Button
+          onPress={all}
+          title="All Keys"
+          color="#0c4a6e"
+          className="text-xs"
+        />
+        <Button
+          onPress={vals}
+          title="All Values"
+          color="#0c4a6e"
+          className="text-xs"
+        />
+      </>
+    );
+  };
+
   return (
     <SafeAreaView className="bg-slate-400 flex-1">
       <View className="bg-slate-100 p-3 w-screen mt-0.5">
-        <Text className="text-base">Playlist Options</Text>
-        <View className="flex">
+        <Text className="text-base font-semibold">Playlist Options</Text>
+        <View className="">
           <PlaylistListOnly />
           <PlaylistAutoPlay />
         </View>
       </View>
 
       <View className="bg-sky-100 p-3 w-screen mt-0.5">
-        <Text className="text-base">Developer Options</Text>
-        <View className="flex-row">
+        <Text className="text-base font-semibold">Developer Options</Text>
+        <View className="">
           <DevGetData />
           <DevClearData />
+          <DevGetFave />
+          <DevClearFave />
+          <DevGetAllKeys />
         </View>
       </View>
 
       <View className="bg-slate-100 p-3 w-screen mt-0.5">
-        <Text className="text-base">Support Developer</Text>
-        <View className="flex-row">
+        <Text className="text-base font-semibold">Support Developer</Text>
+        <View className="">
           <InfoBtn />
         </View>
       </View>

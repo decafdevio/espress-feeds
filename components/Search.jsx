@@ -62,6 +62,20 @@ export default Search = ({ navigation, route, onPress }) => {
     }
   }
 
+  const textListener = async (e) => {
+    e = e.toLowerCase();
+    if (e.length >= 3) {
+      setSearchFilter(
+        stationList.filter(
+          (i) => i.title.toLowerCase().includes(e) || i.genres?.includes(e)
+        )
+      );
+      console.log(searchFilter);
+    } else {
+      setSearchFilter([]);
+    }
+  };
+
   function Item({ item, onPress }) {
     // const stream = fetchStation(item.alias);
 
@@ -75,13 +89,6 @@ export default Search = ({ navigation, route, onPress }) => {
       }
       return genres;
     };
-
-    async function kDissOnPress() {
-      await Keyboard.dismiss;
-      {
-        onPress;
-      }
-    }
 
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -112,17 +119,6 @@ export default Search = ({ navigation, route, onPress }) => {
     );
   }
 
-  const textListener = async (e) => {
-    e = e.toLowerCase();
-    if (e.length >= 3) {
-      setSearchFilter(
-        stationList.filter((i) => i.title.toLowerCase().includes(e))
-      );
-    } else {
-      setSearchFilter([]);
-    }
-  };
-
   return (
     <SafeAreaView className="bg-slate-400 flex-1 -my-1.5">
       <View className="py-4 flex items-center bg-slate-500">
@@ -132,6 +128,7 @@ export default Search = ({ navigation, route, onPress }) => {
           placeholderTextColor={"whitesmoke"}
           className="text-lg min-w-full text-center"
           style={{ color: "white" }}
+          selectionColor={"white"}
         />
       </View>
 
@@ -151,6 +148,7 @@ export default Search = ({ navigation, route, onPress }) => {
           />
         )}
         keyExtractor={(item) => item.alias}
+        initialNumToRender={15}
       />
       <View className="h-1.5"></View>
     </SafeAreaView>
