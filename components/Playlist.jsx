@@ -90,11 +90,20 @@ export default function Playlist({ type, api, country, alias }) {
       {
         text: "Save Track",
         onPress: async () => {
-          await AsyncStorage.setItem(
-            `saved${count}`,
-            JSON.stringify(item.name)
-          );
-          console.log(count);
+          try {
+            const ifExists = await AsyncStorage.getItem("saved");
+
+            if (ifExists) {
+              let response = await AsyncStorage.getItem("saved");
+              let parse = await JSON.parse(response);
+              parse.unshift(item);
+              await AsyncStorage.setItem("saved", JSON.stringify(parse));
+            } else {
+              await AsyncStorage.setItem("saved", JSON.stringify([item]));
+            }
+          } catch (error) {
+            console.error(error);
+          }
         },
         style: "default",
       },

@@ -41,19 +41,20 @@ export default function Settings() {
 
   const DevGetData = () => {
     const get = async () => {
-      const asyncKeys = await AsyncStorage.getAllKeys(),
-        result = await AsyncStorage.multiGet(asyncKeys);
+      const response = await AsyncStorage.getItem("saved");
+      const asyncPKey = JSON.parse(response);
+
       let mList = "";
-      console.log(result);
-      result.map((item) => {
-        mList = mList + item[1] + "\n";
+      asyncPKey?.map((item) => {
+        mList = mList + item.name + "\n";
       });
       mList ? Alert.alert(mList) : Alert.alert("No data");
     };
+
     return (
       <Button
         onPress={get}
-        title="Test Storage"
+        title="Playlist Storage"
         color="#0c4a6e"
         className="text-xs"
       />
@@ -62,17 +63,9 @@ export default function Settings() {
 
   const DevClearData = () => {
     const clear = async () => {
-      const asyncKeys = await AsyncStorage.getAllKeys();
-
       try {
-        if (asyncKeys.length > 0) {
-          if (Platform.OS === "android") {
-            await AsyncStorage.clear();
-          } else {
-            await AsyncStorage.multiRemove(asyncKeys);
-          }
-        }
-        Alert.alert("Data cleared");
+        await AsyncStorage.removeItem("saved");
+        Alert.alert("Playlist cleared");
       } catch (error) {
         console.error(error);
       }
@@ -80,7 +73,7 @@ export default function Settings() {
     return (
       <Button
         onPress={clear}
-        title="Clear Storage"
+        title="Clear Playlist Storage"
         color="#0c4a6e"
         className="text-xs"
       />

@@ -9,6 +9,7 @@ import {
   Linking,
   TouchableOpacity,
   Alert,
+  InteractionManager,
 } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -23,8 +24,11 @@ export default function Saved() {
   useEffect(() => {
     const get = async () => {
       try {
-        const asyncKeys = await AsyncStorage.getAllKeys();
-        setSaved(await AsyncStorage.multiGet(asyncKeys));
+        const response = JSON.parse(await AsyncStorage.getItem("saved"));
+        // console.log(response);
+        setSaved(response);
+        // const asyncKeys = await AsyncStorage.getAllKeys();
+        // setSaved(await AsyncStorage.multiGet(asyncKeys));
       } catch (error) {
         console.error(error);
       }
@@ -59,12 +63,9 @@ export default function Saved() {
   };
 
   function Item(item) {
-    const itemKey = item.item[0];
-    item = item.item[1].replace(/['"]+/g, "");
-    let artist = item.split("-")[0];
-    let track = item.split("-")[1];
+    let artist = item.item.name.split("-")[0];
+    let track = item.item.name.split("-")[1];
     let searchQ = (artist + track).replace(/[ ]+/g, "+");
-
     return (
       <TouchableOpacity
         className="flex-row mt-0.5 bg-slate-100 py-3"
@@ -99,14 +100,9 @@ export default function Saved() {
               <IconFA name="youtube-play" size={27} />
             </Text>
           </TouchableOpacity>
-          {/* <Text className="font-semibold py-1">Now </Text> */}
-          {/* <Text className="p-1 bg-slate-200 text-gray-800 rounded">
-              "TEST"
-            </Text> */}
         </View>
       </TouchableOpacity>
     );
-    // }
   }
 
   return (
