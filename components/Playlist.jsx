@@ -116,13 +116,24 @@ export default function Playlist({ type, api, country, alias }) {
   const Item = ({ item, index }) => {
     if (type == "search") {
       return (
-        <View className="flex-row mt-1 px-2 py-1.5 bg-slate-200 w-fit mr-2 rounded-md">
+        // <View className="flex-row mt-1 px-2 py-1.5 bg-slate-200 w-fit mr-2 rounded-md">
+        //   <View className="flex-row items-center">
+        //     {/* <Text className="px-2 bg-slate-200 font-extrabold">Now</Text> */}
+        //     <View className="relative">
+        //       <Text className="text-xs">
+        //         <Text>{item.name.split("-")[0]} - </Text>
+        //         <Text className="font-semibold">{item.name.split("-")[1]}</Text>
+        //       </Text>
+        //     </View>
+        //   </View>
+        // </View>
+        <View className="w-screen">
           <View className="flex-row items-center">
             {/* <Text className="px-2 bg-slate-200 font-extrabold">Now</Text> */}
-            <View className="relative">
-              <Text className="text-xs">
-                <Text>{item.name.split("-")[0]} - </Text>
-                <Text className="font-semibold">{item.name.split("-")[1]}</Text>
+            <View className="-mt-0.5">
+              <Text className="text-xs text-slate-500 overflow-clip">
+                <Text className="font-light">{item.name.split("-")[0]}-</Text>
+                <Text className="">{item.name.split("-")[1]}</Text>
               </Text>
             </View>
           </View>
@@ -130,13 +141,13 @@ export default function Playlist({ type, api, country, alias }) {
       );
     } else if (type == "stations") {
       return (
-        <View className="mt-1 py-1 bg-slate-200 w-screen rounded-md pl-1">
+        <View className="w-screen">
           <View className="flex-row items-center">
             {/* <Text className="px-2 bg-slate-200 font-extrabold">Now</Text> */}
-            <View className="relative">
-              <Text className="text-xs">
-                <Text> {item.name.split("-")[0]} - </Text>
-                <Text className="font-semibold">{item.name.split("-")[1]}</Text>
+            <View className="mt-0.5">
+              <Text className="text-xs text-slate-500 overflow-clip">
+                <Text className="font-light">{item.name.split("-")[0]}-</Text>
+                <Text className="">{item.name.split("-")[1]}</Text>
               </Text>
             </View>
           </View>
@@ -153,12 +164,14 @@ export default function Playlist({ type, api, country, alias }) {
                   <IconAD name="hearto" size={20} />
                   <IconAD name={index === itemIndex && saveBtn.btnIcon} size={20} />
                 </Text> */}
-            <Text className="pl-2 pr-3 bg-slate-200 font-extralight text-xs">
+            <Text className="pl-2 pr-3 bg-slate-200 text-slate-500 font-light text-xs">
               {item.created}
             </Text>
             <View className="w-screen flex-col relative">
-              <Text>{item.name.split("-")[0]}</Text>
-              <Text className="font-semibold">{item.name.split("- ")[1]}</Text>
+              <Text className="font-extralight text-xs">
+                {item.name.split("-")[0]}
+              </Text>
+              <Text className="">{item.name.split("- ")[1]}</Text>
             </View>
           </View>
         </TouchableOpacity>

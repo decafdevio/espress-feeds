@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import Playlist from "./Playlist";
 import IconMI from "react-native-vector-icons/MaterialIcons";
+import IconE from "react-native-vector-icons/Entypo";
 
 export default Search = ({ navigation, route, onPress }) => {
   const [stationList, setStationList] = useState([]);
@@ -96,11 +97,15 @@ export default Search = ({ navigation, route, onPress }) => {
           className="flex-row mt-0.5 px-1 bg-slate-100"
           onPress={onPress}
         >
-          <View className="flex-row p-1">
+          <View className="flex-row p-1 w-screen">
+            <View className="absolute right-2 top-1 flex-row">
+              <IconE name="location-pin" size={15} color="lightgrey" />
+              <Text className="font-extralight"> {item.cityName}</Text>
+            </View>
+
             <View className="pl-1">
               <View className="flex-row mb-1.5">
-                <Text className="font-semibold">{item.title}</Text>
-                <Text className="pl-2 font-extralight">- {item.cityName}</Text>
+                <Text className="text-base font-light">{item.title}</Text>
               </View>
               <View className="">
                 <Text>

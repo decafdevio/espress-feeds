@@ -227,7 +227,7 @@ export default function Settings() {
       </View>
 
       <View className="bg-slate-100 p-3 w-screen mt-0.5">
-        <Text className="text-base font-semibold">Support Developer</Text>
+        <Text className="text-base font-semibold">Support</Text>
         <View className="">
           <InfoBtn />
         </View>
