@@ -132,7 +132,7 @@ export default function Saved() {
           friction={2}
         >
           <Pressable
-            className="flex-row bg-slate-100"
+            className="flex-row bg-slate-200"
             onLongPress={() => {
               removeItem(item);
             }}
@@ -151,11 +151,11 @@ export default function Saved() {
               />
             </View>
             <View className="pl-3 justify-center">
-              <Text className="text-base">{track}</Text>
-              <Text className="text-sm font-light -mt-0.5">{artist}</Text>
+              <Text className="">{track}</Text>
+              <Text className="font-extralight text-xs mt-0.5">{artist}</Text>
               <View className="flex-row pt-1">
                 <IconMI name="update" size={16} color="grey" />
-                <Text className="text-xs font-light text-slate-500">
+                <Text className="text-xs font-light text-slate-400">
                   10/07/23 - 17:34
                 </Text>
               </View>
@@ -170,7 +170,7 @@ export default function Saved() {
   }
 
   return (
-    <SafeAreaView className="bg-slate-400 flex-1">
+    <SafeAreaView className="bg-slate-50 flex-1">
       <FlatList
         style={{ flex: 1 }}
         data={saved}

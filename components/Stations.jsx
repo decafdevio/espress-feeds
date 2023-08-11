@@ -93,7 +93,7 @@ export default Stations = ({ navigation, route, onPress }) => {
           leftThreshold={20}
           friction={2}
         >
-          <Pressable className="flex-row bg-slate-100" onPress={onPress}>
+          <Pressable className="flex-row bg-slate-200" onPress={onPress}>
             <View>
               <Image
                 source={{
@@ -134,7 +134,7 @@ export default Stations = ({ navigation, route, onPress }) => {
   }
 
   return (
-    <SafeAreaView className="bg-slate-400 flex-1 relative">
+    <SafeAreaView className="bg-slate-50 flex-1 relative">
       <FlatList
         data={saved}
         className="mt-0.5"
