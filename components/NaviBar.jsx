@@ -70,7 +70,7 @@ export default function NaviBar({ props }) {
         <TouchableOpacity onPress={() => navigation.navigate("StationsStack")}>
           <View className="items-center">
             <IconAD name="staro" size={25} color="#0c4a6e" />
-            <Text className="text-sky-900 text-xs p-1">Stations</Text>
+            <Text className="text-sky-900 text-xs py-1">Favourites</Text>
           </View>
         </TouchableOpacity>
         {/* NAV 2 */}
