@@ -16,7 +16,8 @@ Espresso Feeds was my first mobile app and it was developed in React Native. It'
 
 ## Dev Log
   - [x] Nest Screen stack inside Tab stack
-  - [ ] ~~Heart icon to save track~~ Swipe Gestures
+  - [x] ~~Heart icon to save track~~ Swipe Gestures
+  - [ ] Double-Tap gesture for 'save'?
   - [x] Pass route props to search results
   - [x] Manage storage with arrays
   - [x] Complete storage keys
@@ -29,7 +30,7 @@ Espresso Feeds was my first mobile app and it was developed in React Native. It'
 __BUGS__
   - [x] No refresh on screen focus
   - [ ] Error: Prevent duplicates
-  - [ ] Star: enabled/static?
+  - [x] Star: enabled/static?
 
 ## Support Me
 <a href="https://www.buymeacoffee.com/decafdevio"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" width="200" /></a>
