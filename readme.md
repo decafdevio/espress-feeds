@@ -23,14 +23,16 @@ Espresso Feeds was my first mobile app and it was developed in React Native. It'
   - [x] Complete storage keys
   - [x] Manage stations from storage
   - [ ] Manually add station
-  - [ ] Display current station/track playing somewhere
+  - [ ] Display current station/track playing somewhere like a status bar
   - [ ] Settings: Custom values & switches
   - [ ] Sharing features
 
 __BUGS__
   - [x] No refresh on screen focus
+  - [ ] Stations.jsx refreshes on focus, need alternative
   - [ ] Error: Prevent duplicates
   - [x] Star: enabled/static?
+  - [ ] Search clears on play (from Station.jsx)
 
 ## Support Me
 <a href="https://www.buymeacoffee.com/decafdevio"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" width="200" /></a>
