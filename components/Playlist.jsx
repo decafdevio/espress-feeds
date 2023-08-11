@@ -116,24 +116,13 @@ export default function Playlist({ type, api, country, alias }) {
   const Item = ({ item, index }) => {
     if (type == "search") {
       return (
-        // <View className="flex-row mt-1 px-2 py-1.5 bg-slate-200 w-fit mr-2 rounded-md">
-        //   <View className="flex-row items-center">
-        //     {/* <Text className="px-2 bg-slate-200 font-extrabold">Now</Text> */}
-        //     <View className="relative">
-        //       <Text className="text-xs">
-        //         <Text>{item.name.split("-")[0]} - </Text>
-        //         <Text className="font-semibold">{item.name.split("-")[1]}</Text>
-        //       </Text>
-        //     </View>
-        //   </View>
-        // </View>
         <View className="w-screen">
           <View className="flex-row items-center">
             {/* <Text className="px-2 bg-slate-200 font-extrabold">Now</Text> */}
             <View className="-mt-0.5">
-              <Text className="text-xs text-slate-500 overflow-clip">
+              <Text className="text-xs text-slate-500 overflow-ellipsis">
                 <Text className="font-light">{item.name.split("-")[0]}-</Text>
-                <Text className="">{item.name.split("-")[1]}</Text>
+                <Text className="font-semibold">{item.name.split("-")[1]}</Text>
               </Text>
             </View>
           </View>
@@ -147,7 +136,7 @@ export default function Playlist({ type, api, country, alias }) {
             <View className="mt-0.5">
               <Text className="text-xs text-slate-500 overflow-clip">
                 <Text className="font-light">{item.name.split("-")[0]}-</Text>
-                <Text className="">{item.name.split("-")[1]}</Text>
+                <Text className="font-semibold">{item.name.split("-")[1]}</Text>
               </Text>
             </View>
           </View>
@@ -156,22 +145,22 @@ export default function Playlist({ type, api, country, alias }) {
     } else if (type == "list") {
       return (
         <TouchableOpacity
-          className="flex-row mt-1 py-2 bg-slate-200 w-fit"
+          className="flex-row mt-0.5 py-2 bg-slate-200 w-fit"
           onLongPress={() => trackOpts(item, index)}
         >
-          <View className="flex-row py-1 pl-1.5 items-center">
+          <View className="flex-row py-0.5 pl-2.5 items-center">
             {/* <Text className={`${saveBtn.btnColor} pr-1`}>
                   <IconAD name="hearto" size={20} />
                   <IconAD name={index === itemIndex && saveBtn.btnIcon} size={20} />
                 </Text> */}
-            <Text className="pl-2 pr-3 bg-slate-200 text-slate-500 font-light text-xs">
+            <Text className="p-2 bg-slate-100 text-slate-500 font-light text-xs">
               {item.created}
             </Text>
-            <View className="w-screen flex-col relative">
-              <Text className="font-extralight text-xs">
+            <View className="w-screen flex-col relative ml-2.5">
+              <Text className="">{item.name.split("- ")[1]}</Text>
+              <Text className="font-extralight text-xs mt-0.5">
                 {item.name.split("-")[0]}
               </Text>
-              <Text className="">{item.name.split("- ")[1]}</Text>
             </View>
           </View>
         </TouchableOpacity>
