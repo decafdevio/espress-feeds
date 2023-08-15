@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, TouchableOpacity, SafeAreaView, Text } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  Pressable,
+  SafeAreaView,
+  Text,
+  Alert,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Audio } from "expo-av";
 import IconAD from "react-native-vector-icons/AntDesign";
@@ -29,7 +36,7 @@ export default function NaviBar({ props }) {
       track.playAsync();
       setButton("stop-circle-outline");
     } catch (error) {
-      console.error(error);
+      Alert.alert("oops!", error.toString());
       setButton("alert-circle-outline");
       setTimeout(() => {
         setButton("play-circle-outline");
@@ -50,18 +57,23 @@ export default function NaviBar({ props }) {
         setButton("stop-circle-outline");
       } else {
         // disconnect
-        await track.stopAsync();
         track.unloadAsync();
         setButton("play-circle-outline");
       }
     } catch (error) {
-      console.log(error);
+      Alert.alert("oops!", error.toString());
       setButton("alert-circle-outline");
       setTimeout(() => {
         setButton("play-circle-outline");
       }, 2 * 1000);
     }
   }
+
+  // const errHandler = (error) => {
+  //   let err = error.toString();
+  //   console.log("Test Err: ", err);
+  //   Alert.alert("oops!", err);
+  // };
 
   return (
     <SafeAreaView>
@@ -81,22 +93,15 @@ export default function NaviBar({ props }) {
           </View>
         </TouchableOpacity>
         {/* NAV PLAYER */}
-        <TouchableOpacity
+        <Pressable
           onPress={() => {
             playAudio();
           }}
         >
           <View className="rounded-xl bg-sky-900 border-1 border-white px-2 py-2 -my-5">
-            <IconMCI
-              name={button}
-              size={50}
-              color="whitesmoke"
-              onPress={() => {
-                playAudio();
-              }}
-            />
+            <IconMCI name={button} size={50} color="white" />
           </View>
-        </TouchableOpacity>
+        </Pressable>
         {/* NAV 3 */}
         <TouchableOpacity onPress={() => navigation.navigate("SearchStack")}>
           <View className="items-center">
