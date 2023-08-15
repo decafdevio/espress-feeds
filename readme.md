@@ -32,6 +32,7 @@ __BUGS__
   - [ ] Stations.jsx refreshes on focus, need alternative
   - [ ] Error: Prevent duplicates
   - [x] Star: enabled/static?
+  - [x] Error: seeking interrupted
   - [ ] Search clears on play (from Station.jsx)
 
 ## Support Me
