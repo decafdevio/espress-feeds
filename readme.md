@@ -22,6 +22,7 @@ Espresso Feeds was my first mobile app and it was developed in React Native. It'
   - [x] Manage storage with arrays
   - [x] Complete storage keys
   - [x] Manage stations from storage
+  - [ ] Navigation headers
   - [ ] Manually add station
   - [ ] Display current station/track playing somewhere like a status bar
   - [ ] Settings: Custom values & switches
