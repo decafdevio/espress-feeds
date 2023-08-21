@@ -11,6 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Audio } from "expo-av";
 import IconAD from "react-native-vector-icons/AntDesign";
 import IconMCI from "react-native-vector-icons/MaterialCommunityIcons";
+import IconFA from "react-native-vector-icons/FontAwesome";
 const track = new Audio.Sound();
 
 export default function NaviBar({ props }) {
@@ -69,27 +70,21 @@ export default function NaviBar({ props }) {
     }
   }
 
-  // const errHandler = (error) => {
-  //   let err = error.toString();
-  //   console.log("Test Err: ", err);
-  //   Alert.alert("oops!", err);
-  // };
-
   return (
     <SafeAreaView>
       <View className="flex-row justify-around pt-3">
         {/* NAV 1 */}
         <TouchableOpacity onPress={() => navigation.navigate("StationsStack")}>
-          <View className="items-center">
-            <IconAD name="staro" size={25} color="#0c4a6e" />
-            <Text className="text-sky-900 text-xs py-1">Favourites</Text>
+          <View className="items-center mx-2">
+            <IconFA name="bookmark-o" size={25} color="#0c4a6e" />
+            <Text className="text-sky-900 text-xs py-1">Saved</Text>
           </View>
         </TouchableOpacity>
         {/* NAV 2 */}
         <TouchableOpacity onPress={() => navigation.navigate("SavedStack")}>
           <View className="items-center my-[2px]">
             <IconAD name="hearto" size={23} color="#0c4a6e" />
-            <Text className="text-sky-900 text-xs p-1">Saved</Text>
+            <Text className="text-sky-900 text-xs p-1">Playlist</Text>
           </View>
         </TouchableOpacity>
         {/* NAV PLAYER */}

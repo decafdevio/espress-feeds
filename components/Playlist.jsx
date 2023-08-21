@@ -95,7 +95,7 @@ export default function Playlist({ type, api, country, alias }) {
             if (ifSaveExists) {
               let response = await AsyncStorage.getItem("saved");
               let parse = await JSON.parse(response);
-              parse.unshift(item);
+              parse?.unshift(item);
               await AsyncStorage.setItem("saved", JSON.stringify(parse));
             } else {
               await AsyncStorage.setItem("saved", JSON.stringify([item]));
@@ -134,7 +134,7 @@ export default function Playlist({ type, api, country, alias }) {
           <View className="flex-row items-center">
             {/* <Text className="px-2 bg-slate-200 font-extrabold">Now</Text> */}
             <View className="mt-0.5">
-              <Text className="text-xs text-slate-500 overflow-clip">
+              <Text className="text-xs text-slate-500">
                 <Text className="font-light">{item.name.split("-")[0]}-</Text>
                 <Text className="font-semibold">{item.name.split("-")[1]}</Text>
               </Text>

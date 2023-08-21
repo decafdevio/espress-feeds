@@ -29,13 +29,13 @@ export default function App() {
   };
 
   const StationsStack = () => (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Stack.Screen name="Stations" component={Stations} />
-      <Stack.Screen name="Station">
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Stations"
+        component={Stations}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen name="Station" options={{ title: "" }}>
         {() => (
           <Station
             props={fURI}

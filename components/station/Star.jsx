@@ -25,7 +25,7 @@ export default Star = (props) => {
         console.log("ifExists: ", ifExists);
         let response = await AsyncStorage.getItem("fave");
         let parse = await JSON.parse(response);
-        parse.unshift(props.props);
+        parse?.unshift(props.props);
         await AsyncStorage.setItem("fave", JSON.stringify(parse));
       } else {
         await AsyncStorage.setItem("fave", JSON.stringify([props.props]));

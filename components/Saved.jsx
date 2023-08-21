@@ -76,7 +76,7 @@ export default function Saved() {
     let artist = item.item.name.split(" - ")[0];
     let track = item.item.name.split(" - ")[1];
     let searchYT = (artist + "+" + track).replace(/[&]+/g, "+");
-    let searchSP = (artist + "+" + track).replace(/[ ]+/g, "%20");
+    // let searchSP = (artist + "+" + track).replace(/[ ]+/g, "%20"); //? Spotify query doesnt work
     return (
       <GestureHandlerRootView>
         <Swipeable
@@ -132,7 +132,7 @@ export default function Saved() {
           friction={2}
         >
           <Pressable
-            className="flex-row bg-slate-200"
+            className="flex-row bg-slate-200 w-screen"
             onLongPress={() => {
               removeItem(item);
             }}
@@ -150,15 +150,20 @@ export default function Saved() {
                 }}
               />
             </View>
-            <View className="pl-3 justify-center">
-              <Text className="">{track}</Text>
-              <Text className="font-extralight text-xs mt-0.5">{artist}</Text>
-              <View className="flex-row pt-1">
+
+            <View className="pl-3 justify-center w-9/12">
+              <View id="track-overflow" className="">
+                <Text className="overflow-hidden animate-overFlo" style={{}}>
+                  {track}
+                </Text>
+                <Text className="font-extralight text-xs mt-0.5">{artist}</Text>
+              </View>
+              {/* <View className="flex-row pt-1">
                 <IconMI name="update" size={16} color="grey" />
                 <Text className="text-xs font-light text-slate-400">
                   10/07/23 - 17:34
                 </Text>
-              </View>
+              </View> */}
             </View>
             <View className="absolute right-0 bottom-5">
               <IconMI name="navigate-before" size={30} color="lightgrey" />

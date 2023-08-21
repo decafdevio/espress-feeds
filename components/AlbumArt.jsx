@@ -6,6 +6,8 @@ import {
   Dimensions,
 } from "react-native";
 
+//? Need to hook-up the API and test with aync
+
 export default AlbumArt = ({ imgUrl, onPress }) => (
   <View className="px-6 pt-4 pb-3 bg-slate-400">
     <TouchableOpacity onPress={onPress} className="flex left-[15%]">

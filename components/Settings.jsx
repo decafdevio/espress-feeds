@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import IconF from "react-native-vector-icons/Fontisto";
 
 export default function Settings() {
   const InfoBtn = () => {
@@ -42,14 +43,14 @@ export default function Settings() {
   const DevGetData = () => {
     const get = async () => {
       try {
-        const pRes = await AsyncStorage.getItem("saved");
-        const asyncPKey = JSON.parse(pRes);
-        // console.log(pRes);
-        let mList = null;
-        asyncPKey?.map((item) => {
-          mList = mList + item.name + "\n";
-        });
-        mList ? Alert.alert(mList) : Alert.alert("No data");
+        const response = await AsyncStorage.getItem("saved");
+        const asyncPKey = JSON.parse(response);
+        console.log("asyncPKey: ", JSON.parse(response));
+        // let mList = null;
+        // asyncPKey?.map((item) => {
+        //   mList = mList + item.name + "\n";
+        // });
+        // mList ? Alert.alert(mList) : Alert.alert("No data");
       } catch (error) {
         console.error(error);
       }
@@ -89,13 +90,13 @@ export default function Settings() {
       try {
         const response = await AsyncStorage.getItem("fave");
         const asyncFaves = JSON.parse(response);
-
-        let fList = null;
-        asyncFaves?.map((item) => {
-          console.log(item);
-          fList = fList + item.title + "\n";
-        });
-        fList ? Alert.alert(fList) : Alert.alert("No data");
+        console.log("asyncFaves: ", JSON.parse(response));
+        // let fList = null;
+        // asyncFaves?.map((item) => {
+        //   console.log(item);
+        //   fList = fList + item.title + "\n";
+        // });
+        // fList ? Alert.alert(fList) : Alert.alert("No data");
       } catch (error) {
         console.error(error);
       }
@@ -231,6 +232,16 @@ export default function Settings() {
         <View className="">
           <InfoBtn />
         </View>
+      </View>
+
+      <View className="flex p-5 items-center">
+        <IconF name="coffeescript" size={25} color={"white"} />
+        <Text className="flex-row">
+          <Text className="text-lg font-light pl-1 text-slate-50">
+            Espresso
+          </Text>
+          <Text className="text-lg font-semibold text-slate-50">Feeds</Text>
+        </Text>
       </View>
     </SafeAreaView>
   );

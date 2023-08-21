@@ -14,6 +14,7 @@ import { RadioBrowserApi } from "radio-browser-api";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import Playlist from "./Playlist";
+import Splash from "./Splash";
 import IconAD from "react-native-vector-icons/AntDesign";
 import IconFA from "react-native-vector-icons/FontAwesome";
 
@@ -52,27 +53,27 @@ export default Stations = ({ navigation, route, onPress }) => {
 
   function Item({ item, onPress }) {
     //! BUG | API - Get station logo <--
-    const [val, setVal] = useState("");
-    useEffect(() => {
-      const setupApi = async () => {
-        const api = new RadioBrowserApi("Espresso Feeds");
-        const res = await api.searchStations({
-          name: "bbc radio 3",
-          limit: 1,
-          countryCode: "GB",
-        });
-        let aArt;
-        if (res.length > 0) {
-          aArt = JSON.stringify(res[0].favicon);
-        } else {
-          aArt =
-            "https://www.pngitem.com/pimgs/m/35-350426_profile-icon-png-default-profile-picture-png-transparent.png";
-        }
-        setVal(aArt);
-        // console.log(aArt);
-      };
-      setupApi();
-    }, []);
+    // const [val, setVal] = useState("");
+    // useEffect(() => {
+    //   const setupApi = async () => {
+    //     const api = new RadioBrowserApi("Espresso Feeds");
+    //     const res = await api.searchStations({
+    //       name: "bbc radio 3",
+    //       limit: 1,
+    //       countryCode: "GB",
+    //     });
+    //     let aArt;
+    //     if (res.length > 0) {
+    //       aArt = JSON.stringify(res[0].favicon);
+    //     } else {
+    //       aArt =
+    //         "https://www.pngitem.com/pimgs/m/35-350426_profile-icon-png-default-profile-picture-png-transparent.png";
+    //     }
+    //     setVal(aArt);
+    //     // console.log(aArt);
+    //   };
+    //   setupApi();
+    // }, []);
     //! -->
 
     return (
@@ -106,7 +107,7 @@ export default Stations = ({ navigation, route, onPress }) => {
                 }}
               />
             </View>
-            <View className="flex-row py-1">
+            <View className="py-1 justify-center">
               {/* <Image
                 source={{ uri: val }}
                 className="rounded"
@@ -133,25 +134,29 @@ export default Stations = ({ navigation, route, onPress }) => {
     );
   }
 
-  return (
-    <SafeAreaView className="bg-slate-50 flex-1 relative">
-      <FlatList
-        data={saved}
-        className="mt-0.5"
-        renderItem={({ item }) => (
-          <Item
-            item={item}
-            onPress={() =>
-              navigation.navigate("Station", {
-                item,
-              })
-            }
-          />
-        )}
-        keyExtractor={(item) => item.title}
-        renderQuickActions={({ index, item }) => QuickActions(index, item)}
-        ItemSeparatorComponent={() => <View style={{ height: 2 }} />}
-      />
-    </SafeAreaView>
-  );
+  if (saved == "") {
+    return <Splash />; //* Welcome Screen
+  } else {
+    return (
+      <SafeAreaView className="bg-slate-50 flex-1 relative">
+        <FlatList
+          data={saved}
+          className="mt-0.5"
+          renderItem={({ item }) => (
+            <Item
+              item={item}
+              onPress={() =>
+                navigation.navigate("Station", {
+                  item,
+                })
+              }
+            />
+          )}
+          keyExtractor={(item) => item.title}
+          renderQuickActions={({ index, item }) => QuickActions(index, item)}
+          ItemSeparatorComponent={() => <View style={{ height: 2 }} />}
+        />
+      </SafeAreaView>
+    );
+  }
 };

@@ -32,7 +32,7 @@ export default function Station({
         let res = await fetch(widgetAPI);
         let data = await res.json();
         const stream = await data.streamURL;
-        console.log("stream: ", stream);
+        console.log("stream: ", stream); //* stream console.log is HERE >>>>>
         playTrack(stream);
       } catch (error) {
         console.error(error);
